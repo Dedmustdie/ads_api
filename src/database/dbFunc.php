@@ -90,10 +90,3 @@ function addImages($ad_id, $images_name): void
         NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, "Internal server error");
     }
 }
-
-function vardump($var)
-{
-    echo '<pre>';
-    var_dump($var);
-    echo '</pre>';
-}
