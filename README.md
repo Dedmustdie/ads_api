@@ -1,6 +1,6 @@
 # ads_api
 Сервис для работы с объявлениями.
-<p>Методы:
+<h3>Методы:</h3>
 <ul>
   <li>GET: /adsapi/ads/{<strong>pageNumber</strong>}?isPriceSort={<strong>sortDirection</strong>}&isTimeSort={<strong>sortDirection</strong>} - 
   получить список объявлений. 
