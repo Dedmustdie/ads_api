@@ -1,17 +1,18 @@
 <?php
 require __DIR__ . '/../utils/DbUtil.php';
-function getAdsCount(): array
+function getAdsCount(): ?array
 {
     try {
         global $pdo;
-        $res = $pdo->query("SELECT COUNT(*) FROM ads");
+        $res = $pdo->query('SELECT COUNT(*) FROM ads');
         return ['adsCount' => $res->fetchColumn()];
     } catch (Exception $exception) {
-        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, "Internal server error");
+        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, 'Internal server error');
+        return null;
     }
 }
 
-function getAds($start, $per_page, $sortByPrice, $sortByTime): array
+function getAds($start, $per_page, $sortByPrice, $sortByTime): ?array
 {
     try {
         global $pdo;
@@ -20,55 +21,60 @@ function getAds($start, $per_page, $sortByPrice, $sortByTime): array
         $res = $pdo->query("SELECT * FROM ads $orderByString LIMIT $start, $per_page");
         return $res->fetchAll();
     } catch (Exception $exception) {
-        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, "Internal server error");
+        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, 'Internal server error');
+        return null;
     }
 }
 
-function getShortAd($adId): array
+function getShortAd($adId): ?array
 {
     try {
         global $pdo;
         $res = $pdo->query("SELECT id, title, price FROM ads where $adId = id");
         return $res->fetch();
     } catch (Exception $exception) {
-        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, "Internal server error");
+        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, 'Internal server error');
+        return null;
     }
 }
 
-function getAd($adId): array
+function getAd($adId): ?array
 {
     try {
         global $pdo;
         $res = $pdo->query("SELECT id, title, price, text FROM ads where $adId = id");
         return $res->fetch();
     } catch (Exception $exception) {
-        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, "Internal server error");
+        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, 'Internal server error');
+        return null;
     }
 }
 
-function getImages($adId): array
+function getImages($adId): ?array
 {
     try {
         global $pdo;
         $res = $pdo->query("SELECT image_name FROM images where $adId = ad_id");
         return $res->fetchAll(PDO::FETCH_COLUMN);
     } catch (Exception $exception) {
-        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, "Internal server error");
+        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, 'Internal server error');
+        return null;
     }
 }
 
-function getImage($adId): array
+function getImage($adId): ?array
 {
     try {
     global $pdo;
     $res = $pdo->query("SELECT image_name FROM images where $adId = images.ad_id");
     return $res->fetchAll();
     } catch (Exception $exception) {
-        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, "Internal server error");
+        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, 'Internal server error');
+        return null;
     }
 }
 
-function addAd($title, $text, $price): int
+function addAd($title, $text, $price): ?int
 {
     try {
     global $pdo;
@@ -76,7 +82,8 @@ function addAd($title, $text, $price): int
     $pdo->query("INSERT INTO ads (title, text, price, date) VALUES ('$title', '$text', '$price', '$date')");
     return $pdo->lastInsertId();
     } catch (Exception $exception) {
-        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, "Internal server error");
+        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, 'Internal server error');
+        return null;
     }
 }
 
@@ -87,6 +94,6 @@ function addImages($ad_id, $images_name): void
     $images_path_string = DbUtil::createImagesPathString($ad_id, $images_name);
     $pdo->query("INSERT INTO images (ad_id, image_name) VALUES $images_path_string");
     } catch (Exception $exception) {
-        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, "Internal server error");
+        NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, 'Internal server error');
     }
 }

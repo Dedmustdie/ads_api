@@ -4,14 +4,14 @@ class DbUtil
 {
     public static function createOrderByString($sortByPrice, $sortByTime) : string
     {
-        $orderString = "";
-        $sortByPriceFlag = "DESC";
-        $sortByTimeFlag = "DESC";
+        $orderString = '';
+        $sortByPriceFlag = 'DESC';
+        $sortByTimeFlag = 'DESC';
         if ($sortByPrice == 1) {
-            $sortByPriceFlag = "";
+            $sortByPriceFlag = '';
         }
         if ($sortByTime == 1) {
-            $sortByTimeFlag = "";
+            $sortByTimeFlag = '';
         }
 
         if ($sortByPrice != 0) {
@@ -28,7 +28,7 @@ class DbUtil
 
     public static function createImagesPathString($ad_id, $images_name) : string
     {
-        $images_path_string = "";
+        $images_path_string = '';
         for ($index = 0; $index < sizeof($images_name); $index++) {
             if ($index == sizeof($images_name) - 1) {
                 $images_path_string .= "('$ad_id', '$images_name[$index]')";
@@ -38,6 +38,4 @@ class DbUtil
         }
         return $images_path_string;
     }
-
-
 }

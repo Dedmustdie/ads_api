@@ -15,5 +15,5 @@ try {
 
     $pdo = new PDO($dsn, $username, $pass, $opt);
 } catch (Exception $exception) {
-    NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, "Internal server error");
+    NetUtil::sendError(INTERNAL_SERVER_ERROR_CODE, 'Internal server error');
 }
